@@ -14,7 +14,7 @@ The protocol is aimed to be used through websocket.
 
 Every request and responses are formated in a JSON array like the following:
 ```json
-[0, 42, "method", ["any", "arguments", 51]]
+[type, request_id, method, arguments]
 ```
 
 - The first argument is 0 for requests and 1 for responses.
@@ -29,28 +29,28 @@ Every request and responses are formated in a JSON array like the following:
 
 ## RPC Methods
 ### Subscribe to events streams
-Request:
+Request example:
 ```
-[0,42,"subscribe",["public", "eurusd.trades", "eurusd.orderbook", "eurusd.tickers"]]
-[0,43,"subscribe",["private", "orders", "trades"]]
+[0,42,"subscribe",["public", ["eurusd.trades", "eurusd.orderbook", "eurusd.tickers"]]]
+[0,43,"subscribe",["private", ["orders", "trades"]]]
 ```
 
-Response:
+Response example:
 ```
-[1,42,"subscribed",["public", "eurusd.trades", "eurusd.orderbook", "eurusd.tickers"]]
-[1,43,"subscribed",["private", "orders", "trades"]]
+[1,42,"subscribed",["public", ["eurusd.trades", "eurusd.orderbook", "eurusd.tickers"]]]
+[1,43,"subscribed",["private", ["orders", "trades"]]]
 ```
 The response send the full list of current public or private subscriptions for the current connection.
 
 ### Unsubscribe from events streams
 Request:
 ```
-[0,42,"unsubscribe",["public", "eurusd.orderbook"]
+[0,42,"unsubscribe",["public", ["eurusd.orderbook"]]
 ```
 
 Response:
 ```
-[1,42,"unsubscribe",["public", "eurusd.trades","eurusd.tickers"]]
+[1,42,"unsubscribe",["public", ["eurusd.trades","eurusd.tickers"]]]
 ```
 The response send the full list of current public or private subscriptions for the current connection.
 
