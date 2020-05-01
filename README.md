@@ -13,7 +13,7 @@ Why are we doing this? What use cases does it support? What is the expected outc
 The protocol is aimed to be used through websocket.
 
 Every request and responses are formated in a JSON array like the following:
-```json
+```
 [type, request_id, method, arguments]
 ```
 
