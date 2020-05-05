@@ -12,47 +12,59 @@ Why are we doing this? What use cases does it support? What is the expected outc
 
 The protocol is aimed to be used through websocket.
 
-Every request and responses are formated in a JSON array like the following:
+Every events are formated in a JSON array like the following:
 ```
 [type, request_id, method, arguments]
 ```
+|Element|Description|
+|-------|-----------|
+|type|This element identifies the event type: 1 for requests, 2 for responses and 3 for events|
+|request_id|This is a request ID set by the client to identify the resquest and the associated response. It must be an unsigned integer.|
+|method|method name to be called|
+|arguments|list of arguments for the method|
 
-- The first argument is 0 for requests and 1 for responses.
-
-- The second argument is the request ID, the client can set the value he wants and the server will include it in the response. This helps to keep track of which response stands for which request. We use often 42 in our examples, you need to change this value by your own according to your implementation.
-
-- Third is the method name
-
-- Last is a list of arguments for the method
 
 ## Authentication
 
 ## RPC Methods
+
 ### Subscribe to events streams
+
+|Argument|Description|
+|--------|-----------|
+|Scope|"public" or "private", the client needs to be authenticated to subscribe to a private stream |
+|Streams|Array of strings representing the streams to subscribe to|
+
 Request example:
 ```
-[0,42,"subscribe",["public", ["eurusd.trades", "eurusd.orderbook", "eurusd.tickers"]]]
-[0,43,"subscribe",["private", ["orders", "trades"]]]
+[1,42,"subscribe",["public", ["eurusd.trades", "eurusd.orderbook", "eurusd.tickers"]]]
+[1,43,"subscribe",["private", ["orders", "trades"]]]
 ```
 
 Response example:
 ```
-[1,42,"subscribed",["public", ["eurusd.trades", "eurusd.orderbook", "eurusd.tickers"]]]
-[1,43,"subscribed",["private", ["orders", "trades"]]]
+[2,42,"subscribe",["public", ["eurusd.trades", "eurusd.orderbook", "eurusd.tickers"]]]
+[2,43,"subscribe",["private", ["orders", "trades"]]]
 ```
-The response send the full list of current public or private subscriptions for the current connection.
+The response returns the list of *all* current subscriptions for the current connection after the subription is perfomed.
 
 ### Unsubscribe from events streams
+|Argument|Description|
+|--------|-----------|
+|Scope|"public" or "private", the client needs to be authenticated to unsubscribe to a private stream |
+|Streams|Array of strings representing the streams to unsubscribe to|
+
 Request:
 ```
-[0,42,"unsubscribe",["public", ["eurusd.orderbook"]]
+[1,42,"unsubscribe",["public", ["eurusd.orderbook"]]
 ```
 
 Response:
 ```
-[1,42,"unsubscribe",["public", ["eurusd.trades","eurusd.tickers"]]]
+[2,42,"unsubscribe",["public", ["eurusd.trades","eurusd.tickers"]]]
 ```
-The response send the full list of current public or private subscriptions for the current connection.
+
+The response returns the list of remaining subscriptions for the current connection after the unsubsciption is performed.
 
 ### Orders
 #### Market order
