@@ -16,24 +16,44 @@ Every events are formated in a JSON array like the following:
 ```
 [type, request_id, method, arguments]
 ```
-|Element|Description|
-|-------|-----------|
-|type|This element identifies the event type: 1 for requests, 2 for responses and 3 for events|
-|request_id|This is a request ID set by the client to identify the resquest and the associated response. It must be an unsigned integer.|
-|method|method name to be called|
-|arguments|list of arguments for the method|
+| Element    | Description                                                  |
+| ---------- | ------------------------------------------------------------ |
+| type       | This element identifies the event type: 1 for requests, 2 for responses and 3 for events |
+| request_id | This is a request ID set by the client to identify the resquest and the associated response. It must be an unsigned integer. |
+| method     | method name to be called                                     |
+| arguments  | list of arguments for the method                             |
 
+## General definitions
+
+### Units of time definition
+
+|   unit | symbol |
+| -----: | :----- |
+| second | s      |
+| minute | m      |
+|   hour | h      |
+|    day | d      |
+|   week | w      |
+|  month | M      |
+|   year | y      |
+
+The biggest unit of time possible must be chosen to represent a time period.
+
+For example `5m` must be chosen instead of `300s`.
 
 ## Authentication
+
+### Client to server authentication (C2S)
+### Server to server authentication (S2S)
 
 ## RPC Methods
 
 ### Subscribe to events streams
 
-|Argument|Description|
-|--------|-----------|
-|Scope|"public" or "private", the client needs to be authenticated to subscribe to a private stream |
-|Streams|Array of strings representing the streams to subscribe to|
+| Argument | Description                                                  |
+| -------- | ------------------------------------------------------------ |
+| Scope    | "public" or "private", the client needs to be authenticated to subscribe to a private stream |
+| Streams  | Array of strings representing the streams to subscribe to    |
 
 Request example:
 ```
@@ -70,8 +90,26 @@ The response returns the list of remaining subscriptions for the current connect
 #### Market order
 #### Limit order
 
-## Events streams
-### Trades
+## Public events streams
+### Kline (also known as OHLC)
+
+**Arguments**
+
+| Argument      | Description                                               |
+| ------------- | --------------------------------------------------------- |
+| Market ID     | market unique identifier                                  |
+| Period        | Perid                                                     |
+| Timestamp     | Timestamp of the period start                             |
+| Open price    | Price of the first trade in the period                    |
+| High price    | Highest price of the period                               |
+| Low price     | Lowest price of the period                                |
+| Close price   | Price of the last price of the period                     |
+| Period volume | (optional) Sum of trades amount of the period             |
+| Average price | (optional) Weighted average price of trades of the period |
+
+```json
+[3,0,"kline",["ethbtc","15m",1588791600,0.025353,0.025353,0.025353,0.025353,10,0.025353]]
+```
 ### Tickers
 ### Orderbook
 ### Klines
