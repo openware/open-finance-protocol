@@ -90,7 +90,17 @@ The response returns the list of remaining subscriptions for the current connect
 
 In our standard, the parameters order plays an important role as the position of the parameter represents a key. All utilized parameters must be present in request and response even if they not utilized. To skip optional parameter use `null` value. 
 
-##### All arguments that used with order:
+**Order types** with a corresponding code :
+
+| Code | Order type | TIF           | Description                                            |
+| ---- | ---------- | ------------- | ------------------------------------------------------ |
+| 1    | Market     | IOC*          | Market order                                           |
+| 2    | Limit      | GTC* IOC, FOK | Limit order                                            |
+| 3    | Stop-loss  | GTC* IOC, FOK |                                                        |
+| 4    | Stop-limit | GTC* IOC, FOK | *We can put OCO inside stop-limit with a special flag* |
+| *    | Bulk       | Custom, Scale | Each parameter of Bulk order is a separate order       |
+
+**All arguments that used for order creation order**:
 
 | №    | Name          | To discuss*                                                  | Data type | Description                                    |
 | ---- | ------------- | ------------------------------------------------------------ | --------- | ---------------------------------------------- |
@@ -106,17 +116,6 @@ In our standard, the parameters order plays an important role as the position of
 | 10   | timestamp     |                                                              | string    | UTC timestamp                                  |
 | 11   | status@reason |                                                              | string    | Send by exchange with response for orders      |
 | 12   | order_id      |                                                              | string    | Send by exchange with response for orders      |
-
-Use a corresponding code to define **order type** :
-
-| Code | Order type | TIF           | Description                                            |
-| ---- | ---------- | ------------- | ------------------------------------------------------ |
-| 1    | Market     | IOC*          | Market order                                           |
-| 2    | Limit      | GTC* IOC, FOK | Limit order                                            |
-| 3    | Stop-loss  | GTC* IOC, FOK |                                                        |
-| 4    | Stop-limit | GTC* IOC, FOK | *We can put OCO inside stop-limit with a special flag* |
-| 5    | OCO        | GTC* IOC, FOK | One cancel other                                       |
-| *    | Bulk       | Custom, Scale | Each parameter of Bulk order is a separate order       |
 
 Use a corresponding code to define **order side** :
 
@@ -158,19 +157,6 @@ For **timestamps** use UTC time that expressed as milliseconds (i.e. 15886789243
 | 6    | Canceled         | Order canceled by user                                       |
 | 7    | Stopped          | Order stopped by exchange                                    |
 
-**Example of generic order creation request and response**
-
-Request:
-
-```
-[0,42,"createOrder",["instrument", "order_type", "side", "quantity", "price", "stop_price", "tif", "cid", "flags"]
-```
-
-Response:
-
-```
-[1,42,"createOrder",["instrument", "order_type", "side", "quantity", "price", "stop_price", "tif", "cid", "flags", "timestamp", "status@reason", "order_id"]
-```
 
 **Bellow you can find examples of different order types:**
 
@@ -204,13 +190,13 @@ Example of the messages
 Request:
 
 ```
-[0,42,"createMarketOrder",["BTC/USD", 1, 1, "0.100000", "1234567"]
+[,42,"create_order",["BTC/USD", 1, 1, "0.100000", "1234567"]
 ```
 
 Response:
 
 ```
-[1,42,"createMarketOrder",["BTC/USD", 1, 1, "0.100000", "1234567", "1588678924349", "filled@null", "8745635"]
+[2,42,"create_order",["BTC/USD", 1, 1, "0.100000", "1234567", "1588678924349", "filled@null", "8745635"]
 ```
 
 #### Limit order
@@ -251,13 +237,13 @@ Example of the messages
 Request:
 
 ```
-[0,42,"createLimitOrder",["BTC/USD", 2, 1, "0.250000", "9120.00", 2, "1234568", 0]
+[1,42,"create_order",["BTC/USD", 2, 1, "0.250000", "9120.00", 2, "1234568", 0]
 ```
 
 Response:
 
 ```
-[1,42,"createLimitOrder",["BTC/USD", 2, 1, "0.250000", "9120.00", 2, "1234568", 0, "1588678984376", "rejected@insufficient_balance", "8745985"]
+[2,42,"create_order",["BTC/USD", 2, 1, "0.250000", "9120.00", 2, "1234568", 0, "1588678984376", "rejected@insufficient_balance", "8745985"]
 ```
 
 #### Stop-loss order
@@ -296,13 +282,13 @@ Example of the messages
 Request:
 
 ```
-[0,42,"createStopLossOrder",["BTC/USD", 3, 2, "0.250000", "9120.00", 2, "1234568", 0]
+[1,42,"create_order",["BTC/USD", 3, 2, "0.250000", "9120.00", 2, "1234568", 0]
 ```
 
 Response:
 
 ```
-[1,42,"createStopLossOrder",["BTC/USD", 3, 2, "0.250000", "9120.00", 2, "1234568", 0, "1588678984376", "active@null", "8745985"]
+[2,42,"create_order",["BTC/USD", 3, 2, "0.250000", "9120.00", 2, "1234568", 0, "1588678984376", "active@null", "8745985"]
 ```
 
 #### Stop-limit order
@@ -329,8 +315,8 @@ Arguments with corresponding numeration of **stop-limit** order **response**:
 |  2   | order_type    |  integer  |        4        |
 |  3   | side          |  integer  |        1        |
 |  4   | quantity      |  string   |   "0.250000"    |
-|  5   | stop_price    |  string   |    "9120.00"    |
-|  6   | price         |  string   |    "9118.00"    |
+|  5   | price         |  string   |    "9118.00"    |
+|  6   | stop_price    |  string   |    "9120.00"    |
 |  7   | tif           |  string   |        2        |
 |  8   | cid           |  string   |    "1234568"    |
 |  9   | flags         |  integer  |        0        |
@@ -343,60 +329,13 @@ Example of the messages
 Request:
 
 ```
-[0,42,"createStopLimitOrder",["BTC/USD", 4, 1, "0.250000", "9120.00", "9118.00", 2, "1234568", 0]
+[1,42,"create_order",["BTC/USD", 4, 1, "0.250000", "9120.00", "9118.00", 2, "1234568", 0]
 ```
 
 Response:
 
 ```
-[1,42,"createStopLimitOrder",["BTC/USD", 4, 1, "0.250000", "9120.00", "9118.00", 2, "1234568", 0, "1588678984376", "active@null", "8745985"]
-```
-
-#### OCO order
-
-Arguments with corresponding numeration of **OCO** order **request**:
-
-|  №   | Name           | Data type |  Example   |
-| :--: | -------------- | :-------: | :--------: |
-|  1   | instrument     |  string   | "BTC/USD"  |
-|  2   | order_type     |  integer  |     5      |
-|  3   | side           |  integer  |     2      |
-|  4   | quantity       |  string   | "0.250000" |
-|  5   | oco_stop_price |  string   | "9100.00"  |
-|  6   | price          |  string   | "9118.00"  |
-|  7   | tif            |  string   |     2      |
-|  8   | cid            |  string   | "1234568"  |
-|  9   | flags          |  integer  |   16384    |
-
-Arguments with corresponding numeration of **OCO** order **response**:
-
-|  №   | Name           | Data type |     Example     |
-| :--: | -------------- | :-------: | :-------------: |
-|  1   | instrument     |  string   |    "BTC/USD"    |
-|  2   | order_type     |  integer  |        5        |
-|  3   | side           |  integer  |        2        |
-|  4   | quantity       |  string   |   "0.250000"    |
-|  5   | oco_stop_price |  string   |    "9100.00"    |
-|  6   | price          |  string   |    "9118.00"    |
-|  7   | tif            |  string   |        2        |
-|  8   | cid            |  string   |    "1234568"    |
-|  9   | flags          |  integer  |      16384      |
-|  10  | timestamp      |  string   | "1588678984376" |
-|  11  | status@reason  |  string   |  "active@null"  |
-|  12  | order_id       |  string   |    "8745985"    |
-
-Example of the messages 
-
-Request:
-
-```
-[0,42,"createStopLimitOrder",["BTC/USD", 5, 2, "0.250000", "9100.00", "9118.00", 2, "1234568", 16384]
-```
-
-Response:
-
-```
-[1,42,"createStopLimitOrder",["BTC/USD", 5, 2, "0.250000", "9100.00", "9118.00", 2, "1234568", 16384, "1588678984376", "active@null", "8745985"]
+[2,42,"create_order",["BTC/USD", 4, 1, "0.250000", "9120.00", "9118.00", 2, "1234568", 0, "1588678984376", "active@null", "8745985"]
 ```
 
 #### Bulk order
@@ -408,13 +347,13 @@ Example of the messages
 Request:
 
 ```
-[0,42,"createBulkOrder",[[order_1_request], [order_2_request], [order_3_request], [order_4_request]]
+[1,42,"create_bulk",[[order_1_request], [order_2_request], [order_3_request], [order_4_request]]
 ```
 
 Response:
 
 ```
-[1,42,"createBulkOrder",[[order_1_response], [order_2_response], [order_3_response], [order_4_response]]
+[2,42,"create_bulk",[[order_1_response], [order_2_response], [order_3_response], [order_4_response]]
 ```
 
 ### Public events streams
