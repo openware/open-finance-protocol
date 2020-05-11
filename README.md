@@ -18,7 +18,7 @@ Every events are formated in a JSON array like the following:
 ```
 | Element    | Description                                                  |
 | ---------- | ------------------------------------------------------------ |
-| type       | This element identifies the event type: 1 for requests, 2 for responses and 3 for events |
+| type       | This element identifies the event type: 1 for requests, 2 for responses, 3 for public events and 4 for private events |
 | request_id | This is a request ID set by the client to identify the resquest and the associated response. It must be an unsigned integer. |
 | method     | method name to be called                                     |
 | arguments  | list of arguments for the method                             |
@@ -57,14 +57,14 @@ For example `5m` must be chosen instead of `300s`.
 
 Request example:
 ```
-[1,42,"subscribe",["public", ["eurusd.trades", "eurusd.orderbook", "eurusd.tickers"]]]
-[1,43,"subscribe",["private", ["orders", "trades"]]]
+[1,42,"subscribe",["public",["eurusd.trades","eurusd.orderbook","tickers","eurusd.kline-15m"]]]
+[1,43,"subscribe",["private",["orders","trades"]]]
 ```
 
 Response example:
 ```
-[2,42,"subscribe",["public", ["eurusd.trades", "eurusd.orderbook", "eurusd.tickers"]]]
-[2,43,"subscribe",["private", ["orders", "trades"]]]
+[2,42,"subscribe",["public",["eurusd.trades","eurusd.orderbook","tickers","eurusd.kline-15m"]]]
+[2,43,"subscribe",["private",["orders","trades"]]]
 ```
 The response returns the list of *all* current subscriptions for the current connection after the subription is perfomed.
 
@@ -81,7 +81,7 @@ Request:
 
 Response:
 ```
-[2,42,"unsubscribe",["public", ["eurusd.trades","eurusd.tickers"]]]
+[2,42,"unsubscribe",["public", ["eurusd.trades","tickers"]]]
 ```
 
 The response returns the list of remaining subscriptions for the current connection after the unsubsciption is performed.
@@ -110,8 +110,38 @@ The response returns the list of remaining subscriptions for the current connect
 ```json
 [3,0,"kline",["ethbtc","15m",1588791600,0.025353,0.025353,0.025353,0.025353,10,0.025353]]
 ```
+
+
 ### Tickers
+
+```json
+[3,0,"tikers",[
+["ethbtc",1588791600,0.025353,0.025353,0.025353,0.025353,10,0.025353],
+["bchbtc",1588791600,0.025353,0.025353,0.025353,0.025353,10,0.025353]]]
+```
+**Payload**
+
+Array of tickers
+
+| Argument      | Description                                               |
+| ------------- | --------------------------------------------------------- |
+| Market ID     | market unique identifier                                  |
+| Timestamp     | Timestamp of the period start                             |
+| Open price    | Price of the first trade in the period                    |
+| High price    | Highest price of the period                               |
+| Low price     | Lowest price of the period                                |
+| Close price   | Price of the last price of the period                     |
+| Period volume | (optional) Sum of trades amount of the period             |
+| Average price | (optional) Weighted average price of trades of the period |
+
+
 ### Orderbook
-### Klines
+
+## Private events streams
+### Order update
+### Trade event
+### Balance change
+
+
 
 
