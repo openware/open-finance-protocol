@@ -21,7 +21,7 @@ Every events are formatted in a JSON array like the following:
 | Element    | Description                                                                                                                  |
 | ---------- | ---------------------------------------------------------------------------------------------------------------------------- |
 | type       | This element identifies the event type: 1 for requests, 2 for responses, 3 for public events and 4 for private events        |
-| request_id | This is a request ID set by the client to identify the resquest and the associated response. It must be an unsigned integer. |
+| request_id | This is a request ID set by the client to identify the resquest and the associated response. It must be an unsigned integer. It's absent for events. |
 | method     | method name to be called                                                                                                     |
 | arguments  | list of arguments for the method                                                                                             |
 
@@ -122,7 +122,6 @@ The response returns the list of remaining subscriptions for the current connect
 ```json
 [
   3,
-  0,
   "kline",
   [
     "ethbtc",
@@ -143,7 +142,6 @@ The response returns the list of remaining subscriptions for the current connect
 ```json
 [
   3,
-  0,
   "tikers",
   [
     [
