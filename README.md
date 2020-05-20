@@ -110,20 +110,20 @@ In our standard, the parameters order plays an important role as the position of
 
 **All arguments that used for order creation order**:
 
-| №    | Name          | To discuss*                                                  | Data type | Description                                    |
-| ---- | ------------- | ------------------------------------------------------------ | --------- | ---------------------------------------------- |
-| 1    | instrument    | Symbol or Market pair                                        | string    | Used to specify instrument for order "BTC/USD" |
-| 2    | order_type    |                                                              | integer   | Used to specify order type                     |
-| 3    | side          | It can be removed in case of <br />negative amount           | integer   | Used to specify order side, buy or sell        |
-| 4    | quantity      | Amount. Negative amount<br />to indicate sell and positive for buy | string    | An amount that placed within the order         |
-| 5    | price         |                                                              | string    | Main (limit) price of the order                |
-| 6    | stop_price    |                                                              | string    | Stop (trigger) price of the order              |
-| 7    | tif           |                                                              | string    | Time in force instruction                      |
-| 8    | cid           |                                                              | string    | ID of the order that is generated on user side |
-| 9    | flags         |                                                              | integer   | Used to set custom order instructions          |
-| 10   | timestamp     |                                                              | string    | UTC timestamp                                  |
-| 11   | status@reason |                                                              | string    | Send by exchange with response for orders      |
-| 12   | order_id      |                                                              | string    | Send by exchange with response for orders      |
+| №    | Name          | Data type | Description                                    |
+| ---- | ------------- | --------- | ---------------------------------------------- |
+| 1    | instrument    | string    | Used to specify instrument for order "BTC/USD" |
+| 2    | order_type    | integer   | Used to specify order type                     |
+| 3    | side          | integer   | Used to specify order side, buy or sell        |
+| 4    | quantity      | string    | An amount that placed within the order         |
+| 5    | price         | string    | Main (limit) price of the order                |
+| 6    | stop_price    | string    | Stop (trigger) price of the order              |
+| 7    | tif           | string    | Time in force instruction                      |
+| 8    | cid           | string    | ID of the order that is generated on user side |
+| 9    | flags         | integer   | Used to set custom order instructions          |
+| 10   | timestamp     | integer   | UTC timestamp                                  |
+| 11   | status@reason | string    | Send by exchange with response for orders      |
+| 12   | order_id      | string    | Send by exchange with response for orders      |
 
 Supported **TIF** instructions:
 
@@ -175,16 +175,16 @@ Arguments with corresponding numeration of **market** order **request**:
 
 Arguments with corresponding numeration of **market** order **response**:
 
-|  №   | Name          | Data type |     Example     |
-| :--: | ------------- | :-------: | :-------------: |
-|  1   | instrument    |  string   |    "BTC/USD"    |
-|  2   | order_type    |  integer  |       "M"       |
-|  3   | side          |  integer  |      "buy"      |
-|  4   | quantity      |  string   |   "0.100000"    |
-|  5   | cid           |  string   |    "1234567"    |
-|  6   | timestamp     |  string   | "1588678924349" |
-|  7   | status@reason |  string   |  "filled@null"  |
-|  8   | order_id      |  string   |    "8745635"    |
+|  №   | Name          | Data type |    Example    |
+| :--: | ------------- | :-------: | :-----------: |
+|  1   | instrument    |  string   |   "BTC/USD"   |
+|  2   | order_type    |  integer  |      "M"      |
+|  3   | side          |  integer  |     "buy"     |
+|  4   | quantity      |  string   |  "0.100000"   |
+|  5   | cid           |  string   |   "1234567"   |
+|  6   | timestamp     |  integer  | 1588678924349 |
+|  7   | status@reason |  string   | "filled@null" |
+|  8   | order_id      |  string   |   "8745635"   |
 
 Example of the messages 
 
@@ -197,7 +197,7 @@ Request:
 Response:
 
 ```
-[2,42,"create_order",["BTC/USD", "M", "buy", "0.100000", "1234567", "1588678924349", "filled@null", "8745635"]
+[2,42,"create_order",["BTC/USD", "M", "buy", "0.100000", "1234567", 1588678924349, "filled@null", "8745635"]
 ```
 
 #### Limit order
@@ -229,7 +229,7 @@ Arguments with corresponding numeration of **limit** order **response**:
 |  6   | tif           |  string   |                2                |
 |  7   | cid           |  string   |            "1234568"            |
 |  8   | flags         |  integer  |                0                |
-|  9   | timestamp     |  string   |         "1588678984376"         |
+|  9   | timestamp     |  integer  |          1588678984376          |
 |  10  | status@reason |  string   | "rejected@insufficient balance" |
 |  11  | order_id      |  string   |            "8745985"            |
 
@@ -244,7 +244,7 @@ Request:
 Response:
 
 ```
-[2,42,"create_order",["BTC/USD", "L", "buy", "0.250000", "9120.00", 2, "1234568", 0, "1588678984376", "rejected@insufficient_balance", "8745985"]
+[2,42,"create_order",["BTC/USD", "L", "buy", "0.250000", "9120.00", 2, "1234568", 0, 1588678984376, "rejected@insufficient_balance", "8745985"]
 ```
 
 #### Stop order
@@ -264,19 +264,19 @@ Arguments with corresponding numeration of **stop** order **request**:
 
 Arguments with corresponding numeration of **stop** order **response**:
 
-|  №   | Name          | Data type |     Example     |
-| :--: | ------------- | :-------: | :-------------: |
-|  1   | instrument    |  string   |    "BTC/USD"    |
-|  2   | order_type    |  integer  |       "S"       |
-|  3   | side          |  integer  |     "sell"      |
-|  4   | quantity      |  string   |   "0.250000"    |
-|  5   | stop_price    |  string   |    "9120.00"    |
-|  6   | tif           |  string   |        2        |
-|  7   | cid           |  string   |    "1234568"    |
-|  8   | flags         |  integer  |        0        |
-|  9   | timestamp     |  string   | "1588678984376" |
-|  10  | status@reason |  string   |  "active@null"  |
-|  11  | order_id      |  string   |    "8745985"    |
+|  №   | Name          | Data type |    Example    |
+| :--: | ------------- | :-------: | :-----------: |
+|  1   | instrument    |  string   |   "BTC/USD"   |
+|  2   | order_type    |  integer  |      "S"      |
+|  3   | side          |  integer  |    "sell"     |
+|  4   | quantity      |  string   |  "0.250000"   |
+|  5   | stop_price    |  string   |   "9120.00"   |
+|  6   | tif           |  string   |       2       |
+|  7   | cid           |  string   |   "1234568"   |
+|  8   | flags         |  integer  |       0       |
+|  9   | timestamp     |  integer  | 1588678984376 |
+|  10  | status@reason |  string   | "active@null" |
+|  11  | order_id      |  string   |   "8745985"   |
 
 Example of the messages 
 
@@ -289,7 +289,7 @@ Request:
 Response:
 
 ```
-[2,42,"create_order",["BTC/USD", "S", "sell", "0.250000", "9120.00", 2, "1234568", 0, "1588678984376", "active@null", "8745985"]
+[2,42,"create_order",["BTC/USD", "S", "sell", "0.250000", "9120.00", 2, "1234568", 0, 1588678984376, "active@null", "8745985"]
 ```
 
 #### Stop-limit order
@@ -310,20 +310,20 @@ Arguments with corresponding numeration of **stop-limit** order **request**:
 
 Arguments with corresponding numeration of **stop-limit** order **response**:
 
-|  №   | Name          | Data type |     Example     |
-| :--: | ------------- | :-------: | :-------------: |
-|  1   | instrument    |  string   |    "BTC/USD"    |
-|  2   | order_type    |  integer  |      "SL"       |
-|  3   | side          |  integer  |      "buy"      |
-|  4   | quantity      |  string   |   "0.250000"    |
-|  5   | price         |  string   |    "9118.00"    |
-|  6   | stop_price    |  string   |    "9120.00"    |
-|  7   | tif           |  string   |        2        |
-|  8   | cid           |  string   |    "1234568"    |
-|  9   | flags         |  integer  |        0        |
-|  10  | timestamp     |  string   | "1588678984376" |
-|  11  | status@reason |  string   |  "active@null"  |
-|  12  | order_id      |  string   |    "8745985"    |
+|  №   | Name          | Data type |    Example    |
+| :--: | ------------- | :-------: | :-----------: |
+|  1   | instrument    |  string   |   "BTC/USD"   |
+|  2   | order_type    |  integer  |     "SL"      |
+|  3   | side          |  integer  |     "buy"     |
+|  4   | quantity      |  string   |  "0.250000"   |
+|  5   | price         |  string   |   "9118.00"   |
+|  6   | stop_price    |  string   |   "9120.00"   |
+|  7   | tif           |  string   |       2       |
+|  8   | cid           |  string   |   "1234568"   |
+|  9   | flags         |  integer  |       0       |
+|  10  | timestamp     |  integer  | 1588678984376 |
+|  11  | status@reason |  string   | "active@null" |
+|  12  | order_id      |  string   |   "8745985"   |
 
 Example of the messages 
 
@@ -336,7 +336,7 @@ Request:
 Response:
 
 ```
-[2,42,"create_order",["BTC/USD", "SL", "buy", "0.250000", "9120.00", "9118.00", 2, "1234568", 0, "1588678984376", "active@null", "8745985"]
+[2,42,"create_order",["BTC/USD", "SL", "buy", "0.250000", "9120.00", "9118.00", 2, "1234568", 0, 1588678984376, "active@null", "8745985"]
 ```
 
 #### Bulk order
@@ -355,6 +355,58 @@ Response:
 
 ```
 [2,42,"create_bulk",[[order_1_response], [order_2_response], [order_3_response], [order_4_response]]
+```
+
+### Security List Request
+
+Security list method used to synchronize information about tradeable instruments between counterparties. Clearinghouse or liquidity provider can call exchange with that method to get a list of all supported instruments before sending any limits or quotes.
+
+Example of "**security_list**" request:
+
+```
+[1,42,"security_list",["spot", "active"]
+```
+
+In response method sends information about requested instruments. Each instrument described with three arguments.
+
+|  №   | Name                | Data type |  Example  |
+| :--: | ------------------- | :-------: | :-------: |
+|  1   | type                |  string   |  "spot"   |
+|  2   | instrument          |  string   | "BTC/USD" |
+|  3   | min_price_increment |   float   |    0.1    |
+
+Example of "**security_list**" response:
+
+```
+[2,42,"security_list",["spot", "BTC/USD", 0.1, "spot", "ETH/USD", 0.01]
+```
+
+### Limits Request
+
+Limits are part of the protocol that describes a way to communicate trading limits of a counterparty that has an account at the clearinghouse. Platform can subscribe for spending limit of customers that connected throw the clearing house. 
+
+Request for limits consist only of "UID" arguments. Example of "**get_limits**" request:
+
+```
+[1,42,"get_limits",["ID9DA24A1CE5", "ID2CA21D41A9", "ID5BA21D4C6B"...]
+```
+
+The arguments part of the response represented in the form of nested arrays. Each array in the arguments section contains detail information about one account and its limits.
+
+|  №   | Name        | Data type |    Example     |
+| :--: | ----------- | :-------: | :------------: |
+|  1   | uid         |  string   | "ID5BA21D4CE5" |
+|  2   | status      |  integer  |    "active"    |
+|  3   | timestamp   |  integer  | 1588678984376  |
+|  4   | instruments |  integer  |       2        |
+|  5   | instrument  |  string   |   "BTC/USD"    |
+|  6   | maxBuy      |   float   |      250       |
+|  7   | maxSell     |   float   |      -100      |
+
+Example of the  **get_limits** response:
+
+```
+[2,42,"get_limits",[["ID5BA21D4CE5", "active", 1588678984376, 2, "BTC/USD", 250, -100, "ETH/USD", 620, -285], [...], [...]]
 ```
 
 ## Public events streams
