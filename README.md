@@ -122,8 +122,9 @@ In our standard, the parameters order plays an important role as the position of
 | 8    | cid           | string    | ID of the order that is generated on user side |
 | 9    | flags         | integer   | Used to set custom order instructions          |
 | 10   | timestamp     | integer   | UTC timestamp                                  |
-| 11   | status@reason | string    | Send by exchange with response for orders      |
-| 12   | order_id      | string    | Send by exchange with response for orders      |
+| 11   | status        | string    | Status of the order                            |
+| 12   | message       | string    | Message related to the status of the order     |
+| 13   | order_id      | string    | Send by exchange with response for orders      |
 
 Supported **TIF** instructions:
 
@@ -183,8 +184,9 @@ Arguments with corresponding numeration of **market** order **response**:
 |  4   | quantity      |  string   |  "0.100000"   |
 |  5   | cid           |  string   |   "1234567"   |
 |  6   | timestamp     |  integer  | 1588678924349 |
-|  7   | status@reason |  string   | "filled@null" |
-|  8   | order_id      |  string   |   "8745635"   |
+|  7   | status        |  string   |   "filled"    |
+|  8   | message       |  string   |    "null"     |
+|  9   | order_id      |  string   |   "8745635"   |
 
 Example of the messages 
 
@@ -197,7 +199,7 @@ Request:
 Response:
 
 ```
-[2,42,"create_order",["BTC/USD", "M", "buy", "0.100000", "1234567", 1588678924349, "filled@null", "8745635"]
+[2,42,"create_order",["BTC/USD", "M", "buy", "0.100000", "1234567", 1588678924349, "filled", "null", "8745635"]
 ```
 
 #### Limit order
@@ -230,8 +232,9 @@ Arguments with corresponding numeration of **limit** order **response**:
 |  7   | cid           |  string   |            "1234568"            |
 |  8   | flags         |  integer  |                0                |
 |  9   | timestamp     |  integer  |          1588678984376          |
-|  10  | status@reason |  string   | "rejected@insufficient balance" |
-|  11  | order_id      |  string   |            "8745985"            |
+|  10  | status        |  string   |            "rejected"           |
+|  11  | message       |  string   |      "insufficient balance"     |
+|  12  | order_id      |  string   |            "8745985"            |
 
 Example of the messages 
 
@@ -244,7 +247,7 @@ Request:
 Response:
 
 ```
-[2,42,"create_order",["BTC/USD", "L", "buy", "0.250000", "9120.00", 2, "1234568", 0, 1588678984376, "rejected@insufficient_balance", "8745985"]
+[2,42,"create_order",["BTC/USD", "L", "buy", "0.250000", "9120.00", 2, "1234568", 0, 1588678984376, "rejected", "insufficient_balance", "8745985"]
 ```
 
 #### Stop order
@@ -275,8 +278,9 @@ Arguments with corresponding numeration of **stop** order **response**:
 |  7   | cid           |  string   |   "1234568"   |
 |  8   | flags         |  integer  |       0       |
 |  9   | timestamp     |  integer  | 1588678984376 |
-|  10  | status@reason |  string   | "active@null" |
-|  11  | order_id      |  string   |   "8745985"   |
+|  10  | status        |  string   |    "active"   |
+|  11  | message       |  string   |     "null"    |
+|  12  | order_id      |  string   |   "8745985"   |
 
 Example of the messages 
 
@@ -289,7 +293,7 @@ Request:
 Response:
 
 ```
-[2,42,"create_order",["BTC/USD", "S", "sell", "0.250000", "9120.00", 2, "1234568", 0, 1588678984376, "active@null", "8745985"]
+[2,42,"create_order",["BTC/USD", "S", "sell", "0.250000", "9120.00", 2, "1234568", 0, 1588678984376, "active", "null", "8745985"]
 ```
 
 #### Stop-limit order
@@ -322,8 +326,9 @@ Arguments with corresponding numeration of **stop-limit** order **response**:
 |  8   | cid           |  string   |   "1234568"   |
 |  9   | flags         |  integer  |       0       |
 |  10  | timestamp     |  integer  | 1588678984376 |
-|  11  | status@reason |  string   | "active@null" |
-|  12  | order_id      |  string   |   "8745985"   |
+|  11  | status        |  string   |    "active"   |
+|  12  | message       |  string   |     "null"    |
+|  13  | order_id      |  string   |   "8745985"   |
 
 Example of the messages 
 
@@ -336,7 +341,7 @@ Request:
 Response:
 
 ```
-[2,42,"create_order",["BTC/USD", "SL", "buy", "0.250000", "9120.00", "9118.00", 2, "1234568", 0, 1588678984376, "active@null", "8745985"]
+[2,42,"create_order",["BTC/USD", "SL", "buy", "0.250000", "9120.00", "9118.00", 2, "1234568", 0, 1588678984376, "active", "null", "8745985"]
 ```
 
 #### Bulk order
