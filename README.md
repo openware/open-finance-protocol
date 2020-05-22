@@ -53,6 +53,8 @@ For example `5m` must be chosen instead of `300s`.
 
 ### Subscribe to events streams
 
+*Method name: subscribe*
+
 | Argument | Description                                                                                  |
 | -------- | -------------------------------------------------------------------------------------------- |
 | Scope    | "public" or "private", the client needs to be authenticated to subscribe to a private stream |
@@ -75,6 +77,8 @@ Response example:
 The response returns the list of _all_ current subscriptions for the current connection after the subription is perfomed.
 
 ### Unsubscribe from events streams
+
+*Method name: unsubscribe*
 
 | Argument | Description                                                                                    |
 | -------- | ---------------------------------------------------------------------------------------------- |
@@ -103,10 +107,10 @@ In our standard, the parameters order plays an important role as the position of
 
 | Order type | TIF           | Description                                      |
 | :--------: | ------------- | ------------------------------------------------ |
-|     M      | IOC*          | Market order                                     |
-|     L      | GTC* IOC, FOK | Limit order (available flags: hidden, post-only) |
-|     S      | GTC* IOC, FOK | Stop                                             |
-|     SL     | GTC* IOC, FOK | Stop-limit (available flags: OCO)                |
+|     m      | IOC*          | Market order                                     |
+|     l      | GTC* IOC, FOK | Limit order (available flags: hidden, post-only) |
+|     s      | GTC* IOC, FOK | Stop                                             |
+|     sl     | GTC* IOC, FOK | Stop-limit (available flags: OCO)                |
 
 **All arguments that used for order creation order**:
 
@@ -138,12 +142,12 @@ Supported order **flags** instructions:
 
 | Code   | Flag         | Type    | Description                                                  |
 | ------ | ------------ | ------- | ------------------------------------------------------------ |
-| 64     | Hidden       | integer | The hidden order option ensures an order does not appear in the order book; thus does not influence other market participants. |
-| 512    | Close        | integer | Close position if position present.                          |
-| 1024   | Reduce Only  | integer | Ensures that the executed order does not flip the opened position. |
-| 4096   | Post Only    | integer | The post-only limit order option ensures the limit order will be added to the order book and not match with a pre-existing order. |
-| 16384  | OCO          | integer | The one cancels other order option allows you to place a pair of orders stipulating that if one order is executed fully or partially, then the other is automatically canceled. |
-| 524288 | No Var Rates | integer | Excludes variable rate funding offers from matching against this order, if on margin |
+| 1     | Hidden       | integer | The hidden order option ensures an order does not appear in the order book; thus does not influence other market participants. |
+| 2    | Close        | integer | Close position if position present.                          |
+| 4   | Reduce Only  | integer | Ensures that the executed order does not flip the opened position. |
+| 8   | Post Only    | integer | The post-only limit order option ensures the limit order will be added to the order book and not match with a pre-existing order. |
+| 16  | OCO          | integer | The one cancels other order option allows you to place a pair of orders stipulating that if one order is executed fully or partially, then the other is automatically canceled. |
+| 32 | No Var Rates | integer | Excludes variable rate funding offers from matching against this order, if on margin |
 
 For **timestamps** use UTC time that expressed as milliseconds (i.e. 1588678924349)
 
@@ -164,12 +168,14 @@ For **timestamps** use UTC time that expressed as milliseconds (i.e. 15886789243
 
 #### Market order
 
+*Method name: create_order*
+
 Arguments with corresponding numeration of **market** order **request**:
 
 |  №   | Name       | Data type |  Example   |
 | :--: | ---------- | :-------: | :--------: |
 |  1   | instrument |  string   | "BTC/USD"  |
-|  2   | order_type |  integer  |    "M"     |
+|  2   | order_type |  integer  |    "m"     |
 |  3   | side       |  integer  |   "buy"    |
 |  4   | quantity   |  string   | "0.100000" |
 |  5   | cid        |  string   | "1234567"  |
@@ -179,7 +185,7 @@ Arguments with corresponding numeration of **market** order **response**:
 |  №   | Name          | Data type |    Example    |
 | :--: | ------------- | :-------: | :-----------: |
 |  1   | instrument    |  string   |   "BTC/USD"   |
-|  2   | order_type    |  integer  |      "M"      |
+|  2   | order_type    |  integer  |      "m"      |
 |  3   | side          |  integer  |     "buy"     |
 |  4   | quantity      |  string   |  "0.100000"   |
 |  5   | cid           |  string   |   "1234567"   |
@@ -193,13 +199,13 @@ Example of the messages
 Request:
 
 ```
-[,42,"create_order",["BTC/USD", "M", "buy", "0.100000", "1234567"]
+[,42,"create_order",["BTC/USD", "m", "buy", "0.100000", "1234567"]
 ```
 
 Response:
 
 ```
-[2,42,"create_order",["BTC/USD", "M", "buy", "0.100000", "1234567", 1588678924349, "filled", "null", "8745635"]
+[2,42,"create_order",["BTC/USD", "m", "buy", "0.100000", "1234567", 1588678924349, "filled", "null", "8745635"]
 ```
 
 #### Limit order
@@ -362,14 +368,14 @@ Response:
 [2,42,"create_bulk",[[order_1_response], [order_2_response], [order_3_response], [order_4_response]]
 ```
 
-### Security List Request
+### List Instruments Request
 
-Security list method used to synchronize information about tradeable instruments between counterparties. Clearinghouse or liquidity provider can call exchange with that method to get a list of all supported instruments before sending any limits or quotes.
+list instruments method used to synchronize information about tradeable instruments between counterparties. Clearinghouse or liquidity provider can call exchange with that method to get a list of all supported instruments before sending any limits or quotes.
 
-Example of "**security_list**" request:
+Example of "**list_instruments**" request:
 
 ```
-[1,42,"security_list",["spot", "active"]
+[1,42,"list_instruments",["spot", "active"]
 ```
 
 In response method sends information about requested instruments. Each instrument described with three arguments.
@@ -378,12 +384,15 @@ In response method sends information about requested instruments. Each instrumen
 | :--: | ------------------- | :-------: | :-------: |
 |  1   | type                |  string   |  "spot"   |
 |  2   | instrument          |  string   | "BTC/USD" |
-|  3   | min_price_increment |   float   |    0.1    |
+|  3   | base_unit           |  string   | "BTC" |
+|  4   | quote_unit          |  string   | "USD" |
+|  5   | min_price_increment |   float   |    0.1    |
 
-Example of "**security_list**" response:
+
+Example of "**list_instruments**" response:
 
 ```
-[2,42,"security_list",["spot", "BTC/USD", 0.1, "spot", "ETH/USD", 0.01]
+[2,42,"list_instruments",["spot", "BTC/USD", 0.1, "spot", "ETH/USD", 0.01]
 ```
 
 ### Limits Request
