@@ -1,19 +1,20 @@
 # RFC Open Finance Protocol
 
-:warning: This protocol is a draft, it is likely to change.
-Every contribution and suggestion is welcome (with no garanty of merge).
+:warning: This protocol is a draft, it is likely to change in the near future.
+
+:heart: Contributions and suggestions are welcome. :heart:
 
 ## Summary
 
-That standard is aiming to create simple, fast and sufficient protocol for financial communication with/between financial institutions using websocket.
+That standard is aiming to create simple, fast and sufficient protocol for financial communication with/between financial institutions using web-socket.
 
 ## Motivation
 
-The goal of this protocol is to symplify interconnecting financial institutions using a modern protocol, simple to implement using widely used tools as HTTP and websocket.
+The goal of this protocol is to simplify interconnection between financial institutions using a modern protocol, easy to implement using widely supported tools as JSON and web-socket.
 
 ## Introduction to the RPC protocol
 
-The protocol is aimed to be used through websocket.
+The protocol is aimed to be used through web-socket.
 
 Every events are formatted in a JSON array like the following:
 
@@ -21,14 +22,29 @@ Every events are formatted in a JSON array like the following:
 [type, request_id, method, arguments]
 ```
 
-| Element    | Description                                                                                                                  |
-| ---------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| type       | This element identifies the event type: 1 for requests, 2 for responses, 3 for public events and 4 for private events        |
-| request_id | This is a request ID set by the client to identify the resquest and the associated response. It must be an unsigned integer. It's absent for events. |
-| method     | method name to be called                                                                                                     |
-| arguments  | list of arguments for the method                                                                                             |
+| Element    | Description                                                  |
+| ---------- | ------------------------------------------------------------ |
+| type       | This element identifies the type of the event (see the table below) |
+| request_id | This is a request ID set by the client to identify the request and the corresponding response. It must be an unsigned integer. It's absent for events. |
+| method     | method name to be called                                     |
+| arguments  | list of arguments for the method                             |
+
+### Possible types
+
+| Type ID | Short description |
+| ------- | ----------------- |
+| 1       | Request           |
+| 2       | Response          |
+| 3       | Public event      |
+| 4       | Private event     |
+
+
 
 ## General definitions
+
+### Numerical values in finance
+
+Because precision in finance matters very much the **Float type must not be used**, it's an approximate data type which mean values are round up. **Decimal or String representation** should be preferred. A common practice is to use Decimal type inside independent systems and String for communication between systems. This is why every numerical values which matters in this protocol is stored in a string.
 
 ### Units of time definition
 
@@ -65,19 +81,19 @@ For example `5m` must be chosen instead of `300s`.
 
 Request example:
 
-```
+```json
 [1,42,"subscribe",["public",["eurusd.trades","eurusd.orderbook","tickers","eurusd.kline-15m"]]]
 [1,43,"subscribe",["private",["orders","trades"]]]
 ```
 
 Response example:
 
-```
+```json
 [2,42,"subscribe",["public",["eurusd.trades","eurusd.orderbook","tickers","eurusd.kline-15m"]]]
 [2,43,"subscribe",["private",["orders","trades"]]]
 ```
 
-The response returns the list of _all_ current subscriptions for the current connection after the subription is perfomed.
+The response returns the list of **all** current subscriptions for the current connection after the subscription is performed.
 
 ### Unsubscribe from events streams
 
@@ -90,13 +106,13 @@ The response returns the list of _all_ current subscriptions for the current con
 
 Request:
 
-```
+```json
 [1,42,"unsubscribe",["public", ["eurusd.orderbook"]]
 ```
 
 Response:
 
-```
+```json
 [2,42,"unsubscribe",["public", ["eurusd.trades","tickers"]]]
 ```
 
@@ -201,13 +217,13 @@ Example of the messages
 
 Request:
 
-```
+```json
 [,42,"create_order",["BTC/USD", "m", "buy", "0.100000", "1234567"]
 ```
 
 Response:
 
-```
+```json
 [2,42,"create_order",["BTC/USD", "m", "buy", "0.100000", "1234567", 1588678924349, "filled", "null", "8745635"]
 ```
 
@@ -249,13 +265,13 @@ Example of the messages
 
 Request:
 
-```
+```json
 [1,42,"create_order",["BTC/USD", "L", "buy", "0.250000", "9120.00", 2, "1234568", 0]
 ```
 
 Response:
 
-```
+```json
 [2,42,"create_order",["BTC/USD", "L", "buy", "0.250000", "9120.00", 2, "1234568", 0, 1588678984376, "rejected", "insufficient_balance", "8745985"]
 ```
 
