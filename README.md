@@ -236,7 +236,7 @@ Arguments with corresponding numeration of **limit** order **request**:
 |  №   | Name       | Data type |  Example   |
 | :--: | ---------- | :-------: | :--------: |
 |  1   | instrument |  string   | "BTC/USD"  |
-|  2   | order_type |  integer  |    "L"     |
+|  2   | order_type |  integer  |    "l"     |
 |  3   | side       |  integer  |   "buy"    |
 |  4   | quantity   |  string   | "0.250000" |
 |  5   | price      |  string   | "9120.00"  |
@@ -249,7 +249,7 @@ Arguments with corresponding numeration of **limit** order **response**:
 |  №   | Name          | Data type |             Example             |
 | :--: | ------------- | :-------: | :-----------------------------: |
 |  1   | instrument    |  string   |            "BTC/USD"            |
-|  2   | order_type    |  integer  |               "L"               |
+|  2   | order_type    |  integer  |               "l"               |
 |  3   | side          |  integer  |              "buy"              |
 |  4   | quantity      |  string   |           "0.250000"            |
 |  5   | price         |  string   |            "9120.00"            |
@@ -266,13 +266,13 @@ Example of the messages
 Request:
 
 ```json
-[1,42,"create_order",["BTC/USD", "L", "buy", "0.250000", "9120.00", 2, "1234568", 0]
+[1,42,"create_order",["BTC/USD", "l", "buy", "0.250000", "9120.00", 2, "1234568", 0]
 ```
 
 Response:
 
 ```json
-[2,42,"create_order",["BTC/USD", "L", "buy", "0.250000", "9120.00", 2, "1234568", 0, 1588678984376, "rejected", "insufficient_balance", "8745985"]
+[2,42,"create_order",["BTC/USD", "l", "buy", "0.250000", "9120.00", 2, "1234568", 0, 1588678984376, "rejected", "insufficient_balance", "8745985"]
 ```
 
 #### Stop order
@@ -282,7 +282,7 @@ Arguments with corresponding numeration of **stop** order **request**:
 |  №   | Name       | Data type |  Example   |
 | :--: | ---------- | :-------: | :--------: |
 |  1   | instrument |  string   | "BTC/USD"  |
-|  2   | order_type |  integer  |    "S"     |
+|  2   | order_type |  integer  |    "s"     |
 |  3   | side       |  integer  |   "sell"   |
 |  4   | quantity   |  string   | "0.250000" |
 |  5   | stop_price |  string   | "9120.00"  |
@@ -295,7 +295,7 @@ Arguments with corresponding numeration of **stop** order **response**:
 |  №   | Name          | Data type |    Example    |
 | :--: | ------------- | :-------: | :-----------: |
 |  1   | instrument    |  string   |   "BTC/USD"   |
-|  2   | order_type    |  integer  |      "S"      |
+|  2   | order_type    |  integer  |      "s"      |
 |  3   | side          |  integer  |    "sell"     |
 |  4   | quantity      |  string   |  "0.250000"   |
 |  5   | stop_price    |  string   |   "9120.00"   |
@@ -312,13 +312,13 @@ Example of the messages
 Request:
 
 ```
-[1,42,"create_order",["BTC/USD", "S", "sell", "0.250000", "9120.00", 2, "1234568", 0]
+[1,42,"create_order",["BTC/USD", "s", "sell", "0.250000", "9120.00", 2, "1234568", 0]
 ```
 
 Response:
 
 ```
-[2,42,"create_order",["BTC/USD", "S", "sell", "0.250000", "9120.00", 2, "1234568", 0, 1588678984376, "active", "null", "8745985"]
+[2,42,"create_order",["BTC/USD", "s", "sell", "0.250000", "9120.00", 2, "1234568", 0, 1588678984376, "active", "null", "8745985"]
 ```
 
 #### Stop-limit order
@@ -328,7 +328,7 @@ Arguments with corresponding numeration of **stop-limit** order **request**:
 |  №   | Name       | Data type |  Example   |
 | :--: | ---------- | :-------: | :--------: |
 |  1   | instrument |  string   | "BTC/USD"  |
-|  2   | order_type |  integer  |    "SL"    |
+|  2   | order_type |  integer  |    "sl"    |
 |  3   | side       |  integer  |   "buy"    |
 |  4   | quantity   |  string   | "0.250000" |
 |  5   | stop_price |  string   | "9120.00"  |
@@ -342,7 +342,7 @@ Arguments with corresponding numeration of **stop-limit** order **response**:
 |  №   | Name          | Data type |    Example    |
 | :--: | ------------- | :-------: | :-----------: |
 |  1   | instrument    |  string   |   "BTC/USD"   |
-|  2   | order_type    |  integer  |     "SL"      |
+|  2   | order_type    |  integer  |     "sl"      |
 |  3   | side          |  integer  |     "buy"     |
 |  4   | quantity      |  string   |  "0.250000"   |
 |  5   | price         |  string   |   "9118.00"   |
@@ -352,7 +352,7 @@ Arguments with corresponding numeration of **stop-limit** order **response**:
 |  9   | flags         |  integer  |       0       |
 |  10  | timestamp     |  integer  | 1588678984376 |
 |  11  | status        |  string   |    "active"   |
-|  12  | message       |  string   |     "null"    |
+|  12  | message       |  string   |       ""      |
 |  13  | order_id      |  string   |   "8745985"   |
 
 Example of the messages 
@@ -360,13 +360,13 @@ Example of the messages
 Request:
 
 ```
-[1,42,"create_order",["BTC/USD", "SL", "buy", "0.250000", "9120.00", "9118.00", 2, "1234568", 0]
+[1,42,"create_order",["BTC/USD", "sl", "buy", "0.250000", "9120.00", "9118.00", 2, "1234568", 0]
 ```
 
 Response:
 
 ```
-[2,42,"create_order",["BTC/USD", "SL", "buy", "0.250000", "9120.00", "9118.00", 2, "1234568", 0, 1588678984376, "active", "null", "8745985"]
+[2,42,"create_order",["BTC/USD", "sl", "buy", "0.250000", "9120.00", "9118.00", 2, "1234568", 0, 1588678984376, "active", "", "8745985"]
 ```
 
 #### Bulk order
