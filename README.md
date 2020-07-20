@@ -210,7 +210,7 @@ Arguments with corresponding numeration of **market** order **response**:
 |  5   | cid           |  string   |   "1234567"   |
 |  6   | timestamp     |  integer  | 1588678924349 |
 |  7   | status        |  string   |   "filled"    |
-|  8   | message       |  string   |    "null"     |
+|  8   | message       |  string   |"Order full filled"|
 |  9   | order_id      |  string   |   "8745635"   |
 
 Example of the messages 
@@ -224,7 +224,7 @@ Request:
 Response:
 
 ```json
-[2,42,"create_order",["BTC/USD", "m", "buy", "0.100000", "1234567", 1588678924349, "filled", "null", "8745635"]
+[2,42,"create_order",["BTC/USD", "m", "buy", "0.100000", "1234567", 1588678924349, "filled", "", "8745635"]
 ```
 
 #### Limit order
@@ -318,7 +318,7 @@ Request:
 Response:
 
 ```
-[2,42,"create_order",["BTC/USD", "s", "sell", "0.250000", "9120.00", 2, "1234568", 0, 1588678984376, "active", "null", "8745985"]
+[2,42,"create_order",["BTC/USD", "s", "sell", "0.250000", "9120.00", 2, "1234568", 0, 1588678984376, "active", "", "8745985"]
 ```
 
 #### Stop-limit order
