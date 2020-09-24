@@ -1,12 +1,8 @@
 # RFC Open Finance Protocol
 
-:warning: This protocol is a draft, it is likely to change in the near future.
-
-:heart: Contributions and suggestions are welcome. :heart:
-
 ## Summary
 
-That standard is aiming to create simple, fast and sufficient protocol for financial communication with/between financial institutions using web-socket.
+This standard is aiming to create a simple, fast and sufficient protocol for financial communication with and between financial institutions using web-socket.
 
 ## Motivation
 
