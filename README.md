@@ -668,3 +668,9 @@ Payload is Array of elements:
 | Currency | Market currency identifier  |
 | Balance  | User's balance for currency |
 | Locked   | User's locked for currency  |
+
+## Credits
+
+This protocol has been initiated at Openware and is used in production in the [crypto exchange software](https://www.openware.com) solution.
+
+
