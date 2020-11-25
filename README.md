@@ -136,7 +136,7 @@ In our standard, the parameters order plays an important role as the position of
 | 3    | side          | string    | Used to specify order side, "buy" or "sell"    |
 | 4    | quantity      | string    | An amount that placed within the order         |
 | 5    | price         | string    | Main (limit) price of the order                |
-| 6    | stop_price    | string    | Stop (trigger) price of the order              |
+| 6    | trigger_price | string    | Trigger (Stop) price of the order              |
 | 7    | tif           | string    | Time in force instruction                      |
 | 8    | cid           | string    | ID of the order that is generated on user side |
 | 9    | flags         | integer   | Used to set custom order instructions          |
@@ -281,7 +281,7 @@ Arguments with corresponding numeration of **stop** order **request**:
 |  2   | order_type |  string   |    "s"     |
 |  3   | side       |  string   |   "sell"   |
 |  4   | quantity   |  string   | "0.250000" |
-|  5   | stop_price |  string   | "9120.00"  |
+|  5   | trigger_price |  string   | "9120.00"  |
 |  6   | tif        |  integer  |     2      |
 |  7   | cid        |  string   | "1234568"  |
 |  8   | flags      |  integer  |     0      |
@@ -294,7 +294,7 @@ Arguments with corresponding numeration of **stop** order **response**:
 |  2   | order_type    |  string   |      "s"      |
 |  3   | side          |  string   |    "sell"     |
 |  4   | quantity      |  string   |  "0.250000"   |
-|  5   | stop_price    |  string   |   "9120.00"   |
+|  5   | trigger_price |  string   |   "9120.00"   |
 |  6   | tif           |  integer  |       2       |
 |  7   | cid           |  string   |   "1234568"   |
 |  8   | flags         |  integer  |       0       |
@@ -327,7 +327,7 @@ Arguments with corresponding numeration of **stop-limit** order **request**:
 |  2   | order_type |  string   |    "sl"    |
 |  3   | side       |  string   |   "buy"    |
 |  4   | quantity   |  string   | "0.250000" |
-|  5   | stop_price |  string   | "9120.00"  |
+|  5   | trigger_price |  string   | "9120.00"  |
 |  6   | price      |  string   | "9118.00"  |
 |  7   | tif        |  integer  |     2      |
 |  8   | cid        |  string   | "1234568"  |
@@ -342,7 +342,7 @@ Arguments with corresponding numeration of **stop-limit** order **response**:
 |  3   | side          |  string   |     "buy"     |
 |  4   | quantity      |  string   |  "0.250000"   |
 |  5   | price         |  string   |   "9118.00"   |
-|  6   | stop_price    |  string   |   "9120.00"   |
+|  6   | trigger_price |  string   |   "9120.00"   |
 |  7   | tif           |  integer  |       2       |
 |  8   | cid           |  string   |   "1234568"   |
 |  9   | flags         |  integer  |       0       |
