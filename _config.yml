@@ -1,1 +1,24 @@
+title: Open Finance
+description: |
+    Open standard for fast and simple protocol to communicate with financial institutions using web-socket.
+lang: en
+
 remote_theme: rundocs/jekyll-rtd-theme
+
+google:
+  gtag: "G-R2JVFBVW3W"
+  adsense:
+
+exclude:
+  - CNAME
+  - LICENSE
+  - Gemfile
+  - Gemfile.lock
+
+readme_index:
+  with_frontmatter: true
+
+# meta:
+#   key1: value1
+#   key2: value2
+
