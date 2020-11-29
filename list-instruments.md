@@ -3,7 +3,7 @@ sort: 5
 ---
 # List Instruments
 
-list instruments method used to synchronize information about tradeable instruments between counterparties. Clearinghouse or liquidity provider can call exchange with that method to get a list of all supported instruments before sending any limits or quotes.
+The list instruments method is used to fetch the list of trade-able instruments of a platform, for example spot markets. Clearinghouse or liquidity provider can call the exchange with this method to get a list of all supported instruments before sending any limit or quote.
 
 Example of "**list_instruments**" request:
 

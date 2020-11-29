@@ -102,7 +102,7 @@ sort: 9
 
 **Payload**
 
-Payload is Array of elements:
+Payload is an array of elements:
 
 | Argument | Description                 |
 | -------- | --------------------------- |

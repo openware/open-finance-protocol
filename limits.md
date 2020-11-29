@@ -3,7 +3,7 @@ sort: 6
 ---
 # Limits Request
 
-Limits are part of the protocol that describes a way to communicate trading limits of a counterparty that has an account at the clearinghouse. Platform can subscribe for spending limit of customers that connected throw the clearing house.
+Limits describes a way to communicate trading limits of a counterpart that has an account at the clearinghouse. Platform can subscribe for spending limit of customers who are connected throw the clearing house.
 
 Request for limits consist only of "UID" arguments. Example of "**get_limits**" request:
 
@@ -11,7 +11,7 @@ Request for limits consist only of "UID" arguments. Example of "**get_limits**" 
 [1,42,"get_limits",["ID9DA24A1CE5", "ID2CA21D41A9", "ID5BA21D4C6B"...]
 ```
 
-The arguments part of the response represented in the form of nested arrays. Each array in the arguments section contains detail information about one account and its limits.
+The *arguments* part of the response contains nested arrays representing the accounts limits. Each array in the arguments section contains detail information about one account and its limits.
 
 |  №   | Name        | Data type |    Example     |
 | :--: | ----------- | :-------: | :------------: |

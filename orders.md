@@ -3,7 +3,7 @@ sort: 4
 ---
 # Orders
 
-In our standard, the parameters order plays an important role as the position of the parameter represents a key. All utilized parameters must be present in request and response even if they not utilized. To skip optional parameter use `null` value.
+In our standard, the parameters order plays an important role as the position of the parameter represents a key. All utilized parameters must be present in request and response even if they are not utilized. To skip optional parameter use a `null` value.
 
 **Order types** supported with `create_order` method:
 

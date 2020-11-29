@@ -49,4 +49,4 @@ Response:
 [2,42,"unsubscribe",["public", ["eurusd.trades","tickers"]]]
 ```
 
-The response returns the list of remaining subscriptions for the current connection after the unsubsciption is performed.
+The response returns the list of **remaining subscriptions** for the current connection after the unsubscription is performed.
