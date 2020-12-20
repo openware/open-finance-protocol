@@ -1,15 +1,15 @@
-# RFC Open Finance Protocol
+# RFC Open-Finance Protocol
 
 ## Summary
 
-The open finance protocol is a standard to unify the communication with financial instutions.
-It's designed for performances, bandwidth effective and being easy to implement and debug.
+The RFC Open-Finance protocol is a standard to unify the backend communication between financial institutions.
+The design offers high security, performance, effective bandwidth usage, and ease of implementation and debugging.
 
-## Motivation
+## Mission
 
-The goal of this protocol is to simplify interconnection between financial institutions using a modern protocol, easy to implement using widely supported tools as JSON and web-socket.
+The mission of Open-Finance protocol is to simplify interconnection between financial institutions using a modern and easy to implement protocol using reliable, widely supported tools such as JSON and Web-Socket.
 
 
 ## Credits
 
-This protocol has been initiated at Openware and is used in the [crypto exchange software](https://www.openware.com) solution.
+The Open-Finance protocol has been developed and implemented by [Openware](https://www.openware.com) and part of the [OpenDAX](https://www.openware.com/products/opendax) crypto exchange software stack.
