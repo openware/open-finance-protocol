@@ -42,7 +42,7 @@ sort: 8
 ```json
 [
   3,
-  "tikers",
+  "tickers",
   [
     [
       "ethbtc",
@@ -82,8 +82,6 @@ Array of tickers
 
 **Payload**
 
-Array of tickers
-
 | Argument   | Description                          |
 | ---------- | ------------------------------------ |
 | Market ID  | Market unique identifier             |
@@ -100,7 +98,7 @@ Array of tickers
 Orderbook Snapshot
 
 ```json
-[3, "obSnap", [0, [["10", "1"]], [["5", "1"]]]]
+[3, "obs", [0, [["10", "1"]], [["5", "1"]]]]
 ```
 
 | Argument | Description                     |
@@ -114,7 +112,7 @@ Orderbook Snapshot
 Orderbook update
 
 ```json
-[3, "obInc", [1, "asks", ["10", "1"]]]
+[3, "obi", [1, "asks", ["10", "1"]]]
 ```
 
 **Payload**
