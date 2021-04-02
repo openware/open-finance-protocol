@@ -2,23 +2,21 @@
 sort: 9
 ---
 
-
 ## Private events streams
 
-### Order update
+### Order notifications
 
 ```json
 [
   4,
-  "order",
+  "on",
   [
     "btcusd",
     2,
     "7acbbc84-939d-11ea-a827-1831bf9834b0",
     "buy",
-    "bid",
-    "done",
-    "limit",
+    "w",
+    "l",
     "1",
     "1",
     "0",
@@ -30,6 +28,15 @@ sort: 9
 ]
 ```
 
+**Topics**
+
+| Topic | Description    |
+| ----- | -------------- |
+| on    | Order New      |
+| oc    | Order Canceled |
+| ou    | Order Updated  |
+| or    | Order Rejected |
+
 **Payload**
 
 | Argument        | Description                |
@@ -38,7 +45,6 @@ sort: 9
 | ID              | Unique order ID            |
 | UUID            | Unique order uuid          |
 | Side            | "buy" or "sell"            |
-| Kind            | "bid" or "ask"             |
 | State           | Current state of the order |
 | Type            | Order type                 |
 | Price           | Order price                |
@@ -49,48 +55,71 @@ sort: 9
 | Trades Count    | Order trades count         |
 | Timestamp       | Order creation timestamp   |
 
+**States**
+
+| State | Description |
+| ----- | ----------- |
+| p     | Pending     |
+| w     | Wait        |
+| d     | Done        |
+| r     | Rejected    |
+| c     | Canceled    |
+
+**Types**
+
+| Type | Description  |
+| ---- | ------------ |
+| l    | Limit        |
+| m    | Market       |
+| p    | Post Only    |
+| f    | Fill or Kill |
+
 ### Trade event
 
 ```json
 [
   4,
-  "trade",
+  "tr",
   [
     "btcusd",
-    1,
-    "1",
-    "1",
-    "1",
     2,
-    "55d78eee-939e-11ea-945f-1831bf9834b0",
+    "3",
+    "5",
+    "15",
+    3,
+    "5b295fc5-9363-11eb-adb6-1831bf9834b0",
     "buy",
-    "buy",
-    1589211884
+    "sell",
+    "0.005",
+    "btc",
+    1617334050
   ]
 ]
 ```
 
 **Payload**
 
-| Argument   | Description                  |
-| ---------- | ---------------------------- |
-| Market ID  | Market unique identifier     |
-| ID         | Unique trade ID              |
-| Price      | Trade execution price        |
-| Amount     | Trade execution amount       |
-| Funds      | Trade funds, amount \* price |
-| OrderID    | User's trade order ID        |
-| OrderUUID  | User's trade order UUID      |
-| Side       | User's trade order side      |
-| Taker side | Trade taker side             |
-| Timestamp  | Trade timestamp              |
+| Argument     | Description                  |
+| ------------ | ---------------------------- |
+| Market ID    | Market unique identifier     |
+| ID           | Unique trade ID              |
+| Price        | Trade execution price        |
+| Amount       | Trade execution amount       |
+| Funds        | Trade funds, amount \* price |
+| OrderID      | User's trade order ID        |
+| OrderUUID    | User's trade order UUID      |
+| Side         | User's trade order side      |
+| Taker side   | Trade taker side             |
+| Fee          | Fee amount                   |
+| Fee Currency | Fee currency                 |
+| Timestamp    | Trade timestamp              |
 
-### Balance change
+### Balance update
 
 ```json
 [
   4,
-  "balanceUpdate",
+  "bu",
   [
     ["eth", "1000000000", "0"],
     ["trst", "1000000000", "0"],
