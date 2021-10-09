@@ -20,7 +20,7 @@ sort: 8
 ```json
 [
   3,
-  "ethbtc.kline-15m",
+  "kline.15m.ethusd",
   [
     1588791600,
     0.025353,
