@@ -11,20 +11,20 @@ sort: 9
   4,
   "on",
   [
-    "btcusd",
-    2,
-    "7acbbc84-939d-11ea-a827-1831bf9834b0",
-    "buy",
-    "w",
-    "l",
-    "1",
-    "1",
-    "0",
-    "1",
-    "1",
-    1,
-    1589211516
-  ]
+      "btcusd",
+      97,
+      "6dcc2c8e-c295-11ea-b7ad-1831bf9834b0",
+      "sell",
+      "w",
+      "l",
+      "9120",
+      "0",
+      "0.25",
+      "0.25",
+      "0",
+      0,
+      1594386563
+   ]
 ]
 ```
 
@@ -39,21 +39,21 @@ sort: 9
 
 **Payload**
 
-| Argument        | Description                |
-| --------------- | -------------------------- |
-| Market ID       | Market unique identifier   |
-| ID              | Unique order ID            |
-| UUID            | Unique order uuid          |
-| Side            | "buy" or "sell"            |
-| State           | Current state of the order |
-| Type            | Order type                 |
-| Price           | Order price                |
-| Average Price   | Average execution price    |
-| Volume          | Current order volume       |
-| Origin Volume   | Origin volume              |
-| Executed Volume | Executed volume            |
-| Trades Count    | Order trades count         |
-| Timestamp       | Order creation timestamp   |
+| Field           | Example                                |
+| --------------- | -------------------------------------- |
+| Market          | "btcusd"                               |
+| ID              | 97                                     |
+| UUID            | "6dcc2c8e-c295-11ea-b7ad-1831bf9834b0" |
+| Side            | "sell"                                 |
+| State           | "w"                                    |
+| Type            | "l"                                    |
+| Price           | "9120"                                 |
+| Avg. Price      | "0"                                    |
+| Volume          | "0.25"                                 |
+| Orig. Volume    | "0.25"                                 |
+| Executed Volume | "0"                                    |
+| Trades Count    | 0                                      |
+| Timestamp       | 1594386563                             |
 
 **States**
 
