@@ -9,8 +9,6 @@ sort: 8
 
 | Argument      | Description                                               |
 | ------------- | --------------------------------------------------------- |
-| Market ID     | market unique identifier                                  |
-| Period        | Period                                                    |
 | Timestamp     | Timestamp of the period start                             |
 | Open price    | Price of the first trade in the period                    |
 | High price    | Highest price of the period                               |
@@ -22,10 +20,8 @@ sort: 8
 ```json
 [
   3,
-  "kline",
+  "kline.15m.ethusd",
   [
-    "ethbtc",
-    "15m",
     1588791600,
     0.025353,
     0.025353,
@@ -98,7 +94,7 @@ Array of tickers
 Orderbook Snapshot
 
 ```json
-[3, "obs", [0, [["10", "1"]], [["5", "1"]]]]
+[3, "btcusdt.obs", [0, [["10", "1"]], [["5", "1"]]]]
 ```
 
 | Argument | Description                     |
@@ -112,7 +108,7 @@ Orderbook Snapshot
 Orderbook update
 
 ```json
-[3, "obi", [1, "asks", ["10", "1"]]]
+[3, "btcusdt.obi", [1, "asks", ["10", "1"]]]
 ```
 
 **Payload**
